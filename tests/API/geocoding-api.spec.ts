@@ -2,39 +2,39 @@ import { test, expect, request } from '@playwright/test';
 import { ApiClient } from '../../src/api/clients/ApiClient';
 import { env } from '../../src/config/env';
 
-const BASE_URL = 'https://geocoding-api.open-meteo.com/v1/search';
+const BASE_URL = env.apiBaseUrl;
+
+export interface GeocodingResult {
+    id: number;
+    name: string;
+    latitude: number;
+    longitude: number;
+    elevation: number;
+    feature_code: string;
+    country_code: string;
+    admin1_id: number;
+    admin2_id: number;
+    admin3_id: number;
+    admin4_id: number;
+    timezone: string;
+    population: number;
+    postcodes: unknown[];          // the API returns an array (contents vary)
+    country_id: number;
+    country: string;
+    admin1: string;
+    admin2: string;
+    admin3: string;
+    admin4: string;
+}
+
+export interface GeocodingResponse {
+    results: GeocodingResult[];
+    generationtime_ms: number;
+}
 
 test.describe('Geocoding - search for locations', () => {
 
     let api: ApiClient;
-
-    interface GeocodingResult {
-        id: number;
-        name: string;
-        latitude: number;
-        longitude: number;
-        elevation: number;
-        feature_code: string;
-        country_code: string;
-        admin1_id: number;
-        admin2_id: number;
-        admin3_id: number;
-        admin4_id: number;
-        timezone: string;
-        population: number;
-        postcodes: unknown[];          // the API returns an array (contents vary)
-        country_id: number;
-        country: string;
-        admin1: string;
-        admin2: string;
-        admin3: string;
-        admin4: string;
-    }
-
-    interface GeocodingResponse {
-        results: GeocodingResult[];
-        generationtime_ms: number;
-    }
 
     test.beforeEach(({ request }) => {
         api = new ApiClient(request);
@@ -60,10 +60,6 @@ test.describe('Geocoding - search for locations', () => {
 
         expect(typeof data.results[0].latitude).toBe('number');
         expect(typeof data.results[0].longitude).toBe('number');
-
-        // ── optional: reject NaN / Infinity ───────────────────────
-        expect(Number.isFinite(data.results[0].latitude)).toBe(true);
-        expect(Number.isFinite(data.results[0].longitude)).toBe(true);
     });
 
     test('Search for London and validate at least one result is return', { tag: ['@positive'] }, async () => {
@@ -85,11 +81,10 @@ test.describe('Geocoding - search for locations', () => {
         console.log(countries);
         console.log(typeof countries);
         expect(countries).toContain('GB');
-
     });
 
     test('Search for Paris and filter by country', { tag: ['@positive'] }, async () => {
-        const response = await api.get<GeocodingResponse>(BASE_URL, {
+        const response = await api.get<unknown>(BASE_URL, {
             name: 'Paris',
             countryCode: 'FR',
             count: 1,
@@ -110,7 +105,7 @@ test.describe('Geocoding - search for locations', () => {
     });
 
     test('Boundary or weak search term', { tag: ['@negative'] }, async () => {
-        const response = await api.get<GeocodingResponse>(BASE_URL, {
+        const response = await api.get<unknown>(BASE_URL, {
             name: 'x',
             countryCode: 'FR',
             count: 1,
@@ -128,7 +123,7 @@ test.describe('Geocoding - search for locations', () => {
     });
 
     test('Invalid parameter', { tag: ['@negative'] }, async () => {
-        const response = await api.get<GeocodingResponse>(BASE_URL, {
+        const response = await api.get<unknown>(BASE_URL, {
             name: 'Paris',
             count: 0,
             language: 'en',

@@ -15,7 +15,7 @@ function getRequiredEnv(name: string): string {
 
 export const env = {
     uiBaseUrl: getRequiredEnv('UI_BASE_URL'),
-  //  apiBaseUrl: getRequiredEnv('API_BASE_URL'),
+    apiBaseUrl: getRequiredEnv('API_BASE_URL'),
     headless: process.env.HEADLESS !== 'false',
     timeout: Number(process.env.TIMEOUT ?? 30000)
 };

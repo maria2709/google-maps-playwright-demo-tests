@@ -31,6 +31,7 @@ export default defineConfig({
   /* Global settings shared across all projects */
   use: {
     baseURL: env.uiBaseUrl,
+    apiBaseUrl: env.apiBaseUrl,
     headless: process.env.HEADLESS !== 'false',          // controlled via .env
 
     /* Timeouts */
@@ -69,11 +70,18 @@ export default defineConfig({
     },
     // ── API Tests (no browser needed) ─────────────────────────────
     {
-      name: 'API',
+      name: 'api',
       testDir: './tests/API',
       use: {
         baseURL: process.env.API_BASE_URL,
       },
+    },
+    {
+      name: 'contract',
+      testDir: './tests/contract',
+/*      use: {
+        baseURL: process.env.API_BASE_URL,
+      },*/
     // TODO EXTEND the cross-browsing and device compatibility testing
     /*
         {
