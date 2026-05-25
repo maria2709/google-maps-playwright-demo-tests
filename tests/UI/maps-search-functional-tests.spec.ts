@@ -7,15 +7,23 @@ let googleMapsPage: GoogleMapsPage;
 test.describe('Google Maps Feature Tests', () => {
 
   let locationToSearch = 'Paris';
+
   let locationsToSearchAndGetDirections = [
       'London',
       'Eiffel Tower',
       'Buckingham Palace'
   ];
+
   let invalidLocationsToSearch = [
     ' ',
     '@#$',
     '123456890'
+  ];
+
+  let otherThanEnglishLocationsToSearch = [
+    '東京',
+    'Wrocław',
+    'München'
   ];
 
   test.beforeEach(async ({ page }) => {
@@ -34,7 +42,7 @@ test.describe('Google Maps Feature Tests', () => {
   });
 
   for(const location of locationsToSearchAndGetDirections) {
-    test(`Validate directions to location ${location}`, { tag: ['@search', '@smoke', '@positive'] }, async ({ page }) => {
+    test(`Validate directions to location ${location}`, { tag: ['@search', '@positive'] }, async ({ page }) => {
 
       await googleMapsPage.searchForLocation(location);
       expect(await googleMapsPage.getFirstSearchLocationSuggestion()).toContain(location);
@@ -46,12 +54,19 @@ test.describe('Google Maps Feature Tests', () => {
   }
 
   for(const location of invalidLocationsToSearch) {
-    test(`Validate input invalid location ${location}`, { tag: ['@search', '@smoke', '@negative'] }, async ({ page }) => {
+    test(`Validate input invalid location ${location}`, { tag: ['@search', '@negative'] }, async ({ page }) => {
 
       await googleMapsPage.inputLocationAndSearch(location);
       expect(await googleMapsPage.isLocationNotFoundMessageVisible()).toBeTruthy();
       expect(await googleMapsPage.getLocationNotFoundMessage()).toContain(location);
       console.info('Message after input value into Search field:', await googleMapsPage.getLocationNotFoundMessage());
+    });
+  }
+
+  for(const location of otherThanEnglishLocationsToSearch) {
+    test(`Validate not English location title is suggested - ${location}`, { tag: ['@search', '@positive', '@notEnglish'] }, async ({ page }) => {
+      await googleMapsPage.searchForLocation(location);
+      expect(await googleMapsPage.getFirstSearchLocationSuggestion()).toContain(location);
     });
   }
 

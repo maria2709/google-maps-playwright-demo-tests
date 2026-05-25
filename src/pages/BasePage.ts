@@ -15,6 +15,7 @@ export abstract class BasePage {
 
     async open(path: string): Promise<void> {
         await this.page.goto(path);
+        await this.page.waitForLoadState('domcontentloaded');
 
         await this.acceptCookiesIfDisplayed();
         await this.continueFromSmarterGoogleMapsPopupIfDispalyed();

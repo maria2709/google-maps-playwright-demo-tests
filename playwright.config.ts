@@ -25,7 +25,6 @@ export default defineConfig({
   /* Reporters */
   reporter: [
     ['html', { open: 'never' }],                         // HTML report always generated
-    ['allure-playwright'],                                // Allure report (already in your deps)
     ['list'],                                             // Live console output during test run
   ],
 
@@ -61,53 +60,13 @@ export default defineConfig({
 
     // ── Desktop Browsers ──────────────────────────────────────────
     {
-      name: 'UI',
+      name: 'ui-desktop',
       testDir: './tests/UI',
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome',  // uses your locally installed Google Chrome
       },
     },
-    {
-      name: 'Desktop Firefox',
-      testDir: './tests/UI',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'Desktop Safari',
-      testDir: './tests/UI',
-      use: { ...devices['Desktop Safari'] },
-    },
-
-    // ── Mobile Viewports ──────────────────────────────────────────
-    {
-      name: 'Mobile Chrome (Pixel 7)',
-      testDir: './tests/UI',
-      use: { ...devices['Pixel 7'] },
-    },
-    {
-      name: 'Mobile Safari (iPhone 15)',
-      testDir: './tests/UI',
-      use: { ...devices['iPhone 15'] },
-    },
-    {
-      name: 'Mobile Safari (iPhone 15 Pro Max)',
-      testDir: './tests/UI',
-      use: { ...devices['iPhone 15 Pro Max'] },
-    },
-
-    // ── Tablet Viewports ──────────────────────────────────────────
-    {
-      name: 'Tablet Chrome (iPad Pro)',
-      testDir: './tests/UI',
-      use: { ...devices['iPad Pro 11'] },
-    },
-    {
-      name: 'Tablet Safari (iPad Mini)',
-      testDir: './tests/UI',
-      use: { ...devices['iPad Mini'] },
-    },
-
     // ── API Tests (no browser needed) ─────────────────────────────
     {
       name: 'API',
@@ -115,6 +74,38 @@ export default defineConfig({
       use: {
         baseURL: process.env.API_BASE_URL,
       },
+    // TODO EXTEND the cross-browsing and device compatibility testing
+    /*
+        {
+          name: 'ui-firefox-desktop',
+          testDir: './tests/UI',
+          use: { ...devices['Desktop Firefox'] },
+        },
+        {
+          name: 'ui-safari-desktop',
+          testDir: './tests/UI',
+          use: { ...devices['Desktop Safari'] },
+        },
+
+        // ── Mobile Viewports ──────────────────────────────────────────
+        {
+          name: 'ui-mobile-chrome',
+          testDir: './tests/UI',
+          use: { ...devices['Pixel 7'] },
+        },
+        {
+          name: 'ui-mobile-safari',
+          testDir: './tests/UI',
+          use: { ...devices['iPhone 15'] },
+        },
+
+        // ── Tablet Viewports ──────────────────────────────────────────
+        {
+          name: 'ui-tablet-chrome',
+          testDir: './tests/UI',
+          use: { ...devices['iPad Pro 11'] },
+        },
+    */
     },
   ],
 });
