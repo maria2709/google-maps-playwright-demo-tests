@@ -70,22 +70,20 @@ To run success/error **contract** tests:
     `npx playwright test --project contract --grep @error`
 
 ## Tests approach and next steps
-### UI tests
+## UI tests
 1. UI tests in the current version cover search for location and get directions - positive and negative test cases. 
 2. Using Chrome browser and desktop viewport
 3. As a guest user
 4. English version
-## Suggestions to extend
+### Suggestions to extend
 1. Signed/Guest - Add scenarios for logged users considering preferences
 2. Compatibility/Cross-browsing - Extend the suite to cover different devices, browsers and viewports - commented out in playwright.config.ts as TODO section
 3. Functional - Extend test suites and cover other features according to the requirements
 4. Localization - Add tests for other language preferences (parameters)
 
-### API tests
-## Suggestions to extend
+### API tests - Suggestions to extend
 1. Add validation with different combination of query parameters - for positive scenarios
 2. Add more negative test cases and validate error handling
 
-### Contract tests
-## Suggestions to extend
-1. Add more schema validations according to the contract
+### Contract tests - Suggestions 
+1. Add more schema and status codes validations according to the contract
