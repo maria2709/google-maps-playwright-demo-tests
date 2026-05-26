@@ -70,7 +70,7 @@ To run success/error **contract** tests:
     `npx playwright test --project contract --grep @error`
 
 ## Tests approach and next steps
-## UI tests
+### UI tests
 1. UI tests in the current version cover search for location and get directions - positive and negative test cases. 
 2. Using Chrome browser and desktop viewport
 3. As a guest user
