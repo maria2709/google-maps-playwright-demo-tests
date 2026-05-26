@@ -3,23 +3,19 @@ import { GoogleMapsPage } from "../../src/pages/GoogleMapsPage";
 
 let googleMapsPage: GoogleMapsPage;
 
-
 test.describe('Google Maps Feature Tests', () => {
 
   let locationToSearch = 'Paris';
-
   let locationsToSearchAndGetDirections = [
       'London',
       'Eiffel Tower',
       'Buckingham Palace'
   ];
-
   let invalidLocationsToSearch = [
     ' ',
     '@#$',
     '123456890'
   ];
-
   let otherThanEnglishLocationsToSearch = [
     '東京',
     'Wrocław',
@@ -58,8 +54,9 @@ test.describe('Google Maps Feature Tests', () => {
 
       await googleMapsPage.inputLocationAndSearch(location);
       expect(await googleMapsPage.isLocationNotFoundMessageVisible()).toBeTruthy();
-      expect(await googleMapsPage.getLocationNotFoundMessage()).toContain(location);
-      console.info('Message after input value into Search field:', await googleMapsPage.getLocationNotFoundMessage());
+      let message = await googleMapsPage.getLocationNotFoundMessage();
+      console.log('Message after input value into Search field:', message);
+      expect(message).toContain(location);
     });
   }
 
