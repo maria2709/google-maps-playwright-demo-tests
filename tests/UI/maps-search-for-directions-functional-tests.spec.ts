@@ -41,7 +41,7 @@ test.describe('Google Maps Feature Tests', () => {
     test(`Validate directions to location ${location}`, { tag: ['@search', '@positive'] }, async ({ page }) => {
 
       await googleMapsPage.searchForLocation(location);
-      expect(await googleMapsPage.getFirstSearchLocationSuggestion()).toContain(location, { ignoreCase: true });
+      expect((await googleMapsPage.getFirstSearchLocationSuggestion()).toLowerCase()).toContain(location.toLowerCase());
       await googleMapsPage.selectFirstLocation();
       expect(await googleMapsPage.isDirectionsButtonVisible()).toBeTruthy();
       await googleMapsPage.getDirections();
