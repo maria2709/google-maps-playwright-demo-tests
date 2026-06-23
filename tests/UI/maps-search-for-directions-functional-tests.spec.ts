@@ -8,7 +8,7 @@ test.describe('Google Maps Feature Tests', () => {
   let locationToSearch = 'Paris';
   let locationsToSearchAndGetDirections = [
       'London',
-      'Eiffel Tower',
+      'eiffel tower',
       'Buckingham Palace'
   ];
   let invalidLocationsToSearch = [
