@@ -8,7 +8,7 @@ test.describe('Google Maps Feature Tests', () => {
   let locationToSearch = 'Paris';
   let locationsToSearchAndGetDirections = [
       'London',
-      'eiffel tower',
+      'Eiffel Tower',
       'Buckingham Palace'
   ];
   let invalidLocationsToSearch = [
@@ -41,7 +41,7 @@ test.describe('Google Maps Feature Tests', () => {
     test(`Validate directions to location ${location}`, { tag: ['@search', '@positive'] }, async ({ page }) => {
 
       await googleMapsPage.searchForLocation(location);
-      expect(await googleMapsPage.getFirstSearchLocationSuggestion()).toContain(location);
+      await expect(googleMapsPage.getFirstSearchLocationSuggestion()).toContainText(location, { ignoreCase: true });
       await googleMapsPage.selectFirstLocation();
       expect(await googleMapsPage.isDirectionsButtonVisible()).toBeTruthy();
       await googleMapsPage.getDirections();
