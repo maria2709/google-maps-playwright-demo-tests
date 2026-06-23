@@ -68,6 +68,16 @@ export default defineConfig({
         channel: 'chrome',  // uses your locally installed Google Chrome
       },
     },
+     {
+      name: 'ui-firefox-desktop',
+      testDir: './tests/UI',
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'ui-safari-desktop',
+      testDir: './tests/UI',
+      use: { ...devices['Desktop Safari'] },
+    },
     // ── API Tests (no browser needed) ─────────────────────────────
     {
       name: 'api',
